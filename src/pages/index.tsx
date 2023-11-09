@@ -13,6 +13,7 @@ import {
   AccordionContent,
   AccordionItem,
 } from "@/components/ui/accordion";
+import { Separator } from "@/components/ui/separator";
 import { UserCard } from "@/components/user/UserCard";
 import { UserCardLoading } from "@/components/user/UserCardLoading";
 
@@ -22,7 +23,11 @@ export default function Home() {
   // NOTE - Get the user search query from the store
   const user = useSelector((state: RootState) => state.user);
 
-  const { data: usersData, isFetching: isFetchingUsers } = useGetUsersQuery({
+  const {
+    data: usersData,
+    isFetching: isFetchingUsers,
+    isFetched: isFetchedUsers,
+  } = useGetUsersQuery({
     searchQuery: user.searchQuery,
   });
 
@@ -44,6 +49,12 @@ export default function Home() {
 
   return (
     <Layout>
+      {isFetchedUsers && (
+        <div className="my-2 text-sm text-secondary-foreground">
+          Shows users for "{user.searchQuery}"
+        </div>
+      )}
+      <Separator className="mb-4" />
       {isFetchingUsers || !usersData ? (
         <UserCardLoading isFetching={isFetchingUsers} />
       ) : (
