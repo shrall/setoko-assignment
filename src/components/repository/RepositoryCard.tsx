@@ -1,6 +1,8 @@
 import { Star } from "lucide-react";
 import React from "react";
 
+import { cn } from "@/lib/utils";
+
 import { Repository } from "@/models/Repository";
 
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
@@ -10,13 +12,13 @@ interface RepositoryCardProps extends React.HTMLAttributes<HTMLDivElement> {
   repository: Repository;
 }
 
-export default function RepositoryCard({
+export function RepositoryCard({
   className,
   repository,
   ...rest
 }: RepositoryCardProps) {
   return (
-    <Card className={className} {...rest}>
+    <Card className={cn("mb-2", className)} {...rest}>
       <CardHeader className="px-4 pb-0 pt-2">
         <CardTitle className="text-md flex items-center">
           {repository.name}

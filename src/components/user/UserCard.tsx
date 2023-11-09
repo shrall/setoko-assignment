@@ -11,7 +11,7 @@ interface UserCardProps extends React.HTMLAttributes<HTMLDivElement> {
   user: User;
 }
 
-function UserCard({ user, ...rest }: UserCardProps) {
+export function UserCard({ user, ...rest }: UserCardProps) {
   return (
     <Card {...rest}>
       <AccordionTrigger className="px-4 py-0 focus:rounded-md focus:bg-primary-foreground focus:no-underline focus:ring-2 focus:ring-primary">
@@ -26,5 +26,3 @@ function UserCard({ user, ...rest }: UserCardProps) {
     </Card>
   );
 }
-
-export default UserCard;

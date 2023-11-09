@@ -13,7 +13,7 @@ interface UserCardLoadingProps extends React.HTMLAttributes<HTMLDivElement> {
   description?: string;
 }
 
-export default function UserCardLoading({
+export function UserCardLoading({
   isFetching = false,
   description = "Search Github User",
   className,

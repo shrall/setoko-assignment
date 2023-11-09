@@ -28,7 +28,7 @@ export default function Header() {
   }, [debouncedSearchQuery, dispatch, screenWidth]);
 
   return (
-    <header className="sticky top-0 z-50 bg-white">
+    <header className="sticky top-0 z-50 bg-white pt-4">
       <div className="flex flex-col items-center justify-between gap-x-2 gap-y-4 sm:h-14 sm:flex-wrap sm:items-baseline sm:justify-between">
         <Link href="/" className="text-2xl font-bold hover:text-gray-600">
           Github Repositories Explorer
