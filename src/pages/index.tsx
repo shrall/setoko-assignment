@@ -1,43 +1,206 @@
+import * as React from "react";
+import { useSelector } from "react-redux";
+
+import useGetUsersQuery from "@/hooks/useGetUsersQuery";
+
 import Layout from "@/components/layout/Layout";
-import { Accordion } from "@/components/ui/accordion";
+import RepositoryCard from "@/components/repository/RepositoryCard";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+} from "@/components/ui/accordion";
 import UserCard from "@/components/user/UserCard";
+import UserCardLoading from "@/components/user/UserCardLoading";
 
-import { User } from "@/models/User";
+import { RootState } from "@/store/store";
 
-const users: User[] = [
-  {
-    login: "mojombo",
-    id: 1,
-    node_id: "MDQ6VXNlcjE=",
-    avatar_url:
-      "https://secure.gravatar.com/avatar/25c7c18223fb42a4c6ae1c8db6f50f9b?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png",
-    gravatar_id: "",
-    url: "https://api.github.com/users/mojombo",
-    html_url: "https://github.com/mojombo",
-    followers_url: "https://api.github.com/users/mojombo/followers",
-    subscriptions_url: "https://api.github.com/users/mojombo/subscriptions",
-    organizations_url: "https://api.github.com/users/mojombo/orgs",
-    repos_url: "https://api.github.com/users/mojombo/repos",
-    received_events_url: "https://api.github.com/users/mojombo/received_events",
-    type: "User",
-    score: 1,
-    following_url:
-      "https://api.github.com/users/mojombo/following{/other_user}",
-    gists_url: "https://api.github.com/users/mojombo/gists{/gist_id}",
-    starred_url: "https://api.github.com/users/mojombo/starred{/owner}{/repo}",
-    events_url: "https://api.github.com/users/mojombo/events{/privacy}",
-    site_admin: true,
-  },
-];
+import { Repository } from "@/models/Repository";
 
 export default function Home() {
+  // NOTE - Get the user search query from the store
+  const user = useSelector((state: RootState) => state.user);
+
+  const { data: usersData, isFetching } = useGetUsersQuery({
+    options: { queryKey: ["users", user.searchQuery] },
+    searchQuery: user.searchQuery,
+  });
+
+  const repositories: Repository[] = [
+    {
+      id: 1296269,
+      node_id: "MDEwOlJlcG9zaXRvcnkxMjk2MjY5",
+      name: "Hello-World",
+      full_name: "octocat/Hello-World",
+      owner: {
+        login: "octocat",
+        id: 1,
+        node_id: "MDQ6VXNlcjE=",
+        avatar_url: "https://github.com/images/error/octocat_happy.gif",
+        gravatar_id: "",
+        url: "https://api.github.com/users/octocat",
+        html_url: "https://github.com/octocat",
+        followers_url: "https://api.github.com/users/octocat/followers",
+        following_url:
+          "https://api.github.com/users/octocat/following{/other_user}",
+        gists_url: "https://api.github.com/users/octocat/gists{/gist_id}",
+        starred_url:
+          "https://api.github.com/users/octocat/starred{/owner}{/repo}",
+        subscriptions_url: "https://api.github.com/users/octocat/subscriptions",
+        organizations_url: "https://api.github.com/users/octocat/orgs",
+        repos_url: "https://api.github.com/users/octocat/repos",
+        events_url: "https://api.github.com/users/octocat/events{/privacy}",
+        received_events_url:
+          "https://api.github.com/users/octocat/received_events",
+        type: "User",
+        site_admin: false,
+      },
+      private: false,
+      html_url: "https://github.com/octocat/Hello-World",
+      description: "This your first repo!",
+      fork: false,
+      url: "https://api.github.com/repos/octocat/Hello-World",
+      archive_url:
+        "https://api.github.com/repos/octocat/Hello-World/{archive_format}{/ref}",
+      assignees_url:
+        "https://api.github.com/repos/octocat/Hello-World/assignees{/user}",
+      blobs_url:
+        "https://api.github.com/repos/octocat/Hello-World/git/blobs{/sha}",
+      branches_url:
+        "https://api.github.com/repos/octocat/Hello-World/branches{/branch}",
+      collaborators_url:
+        "https://api.github.com/repos/octocat/Hello-World/collaborators{/collaborator}",
+      comments_url:
+        "https://api.github.com/repos/octocat/Hello-World/comments{/number}",
+      commits_url:
+        "https://api.github.com/repos/octocat/Hello-World/commits{/sha}",
+      compare_url:
+        "https://api.github.com/repos/octocat/Hello-World/compare/{base}...{head}",
+      contents_url:
+        "https://api.github.com/repos/octocat/Hello-World/contents/{+path}",
+      contributors_url:
+        "https://api.github.com/repos/octocat/Hello-World/contributors",
+      deployments_url:
+        "https://api.github.com/repos/octocat/Hello-World/deployments",
+      downloads_url:
+        "https://api.github.com/repos/octocat/Hello-World/downloads",
+      events_url: "https://api.github.com/repos/octocat/Hello-World/events",
+      forks_url: "https://api.github.com/repos/octocat/Hello-World/forks",
+      git_commits_url:
+        "https://api.github.com/repos/octocat/Hello-World/git/commits{/sha}",
+      git_refs_url:
+        "https://api.github.com/repos/octocat/Hello-World/git/refs{/sha}",
+      git_tags_url:
+        "https://api.github.com/repos/octocat/Hello-World/git/tags{/sha}",
+      git_url: "git:github.com/octocat/Hello-World.git",
+      issue_comment_url:
+        "https://api.github.com/repos/octocat/Hello-World/issues/comments{/number}",
+      issue_events_url:
+        "https://api.github.com/repos/octocat/Hello-World/issues/events{/number}",
+      issues_url:
+        "https://api.github.com/repos/octocat/Hello-World/issues{/number}",
+      keys_url:
+        "https://api.github.com/repos/octocat/Hello-World/keys{/key_id}",
+      labels_url:
+        "https://api.github.com/repos/octocat/Hello-World/labels{/name}",
+      languages_url:
+        "https://api.github.com/repos/octocat/Hello-World/languages",
+      merges_url: "https://api.github.com/repos/octocat/Hello-World/merges",
+      milestones_url:
+        "https://api.github.com/repos/octocat/Hello-World/milestones{/number}",
+      notifications_url:
+        "https://api.github.com/repos/octocat/Hello-World/notifications{?since,all,participating}",
+      pulls_url:
+        "https://api.github.com/repos/octocat/Hello-World/pulls{/number}",
+      releases_url:
+        "https://api.github.com/repos/octocat/Hello-World/releases{/id}",
+      ssh_url: "git@github.com:octocat/Hello-World.git",
+      stargazers_url:
+        "https://api.github.com/repos/octocat/Hello-World/stargazers",
+      statuses_url:
+        "https://api.github.com/repos/octocat/Hello-World/statuses/{sha}",
+      subscribers_url:
+        "https://api.github.com/repos/octocat/Hello-World/subscribers",
+      subscription_url:
+        "https://api.github.com/repos/octocat/Hello-World/subscription",
+      tags_url: "https://api.github.com/repos/octocat/Hello-World/tags",
+      teams_url: "https://api.github.com/repos/octocat/Hello-World/teams",
+      trees_url:
+        "https://api.github.com/repos/octocat/Hello-World/git/trees{/sha}",
+      clone_url: "https://github.com/octocat/Hello-World.git",
+      mirror_url: "git:git.example.com/octocat/Hello-World",
+      hooks_url: "https://api.github.com/repos/octocat/Hello-World/hooks",
+      svn_url: "https://svn.github.com/octocat/Hello-World",
+      homepage: "https://github.com",
+      language: null,
+      forks_count: 9,
+      stargazers_count: 80,
+      watchers_count: 80,
+      size: 108,
+      default_branch: "master",
+      open_issues_count: 0,
+      is_template: false,
+      topics: ["octocat", "atom", "electron", "api"],
+      has_issues: true,
+      has_projects: true,
+      has_wiki: true,
+      has_pages: false,
+      has_downloads: true,
+      has_discussions: false,
+      archived: false,
+      disabled: false,
+      visibility: "public",
+      pushed_at: "2011-01-26T19:06:43Z",
+      created_at: "2011-01-26T19:01:12Z",
+      updated_at: "2011-01-26T19:14:43Z",
+      permissions: {
+        admin: false,
+        push: false,
+        pull: true,
+      },
+      security_and_analysis: {
+        advanced_security: {
+          status: "enabled",
+        },
+        secret_scanning: {
+          status: "enabled",
+        },
+        secret_scanning_push_protection: {
+          status: "disabled",
+        },
+      },
+    },
+  ];
+
   return (
     <Layout>
-      <Accordion type="single" collapsible>
-        {users.map((user) => (
-          <UserCard key={user.id} user={user} />
-        ))}
-      </Accordion>
+      {isFetching || !usersData ? (
+        <UserCardLoading isFetching={isFetching} />
+      ) : (
+        <Accordion type="single" collapsible>
+          {usersData?.length === 0 ? (
+            <UserCardLoading description="No Users Found" />
+          ) : (
+            usersData?.map((user) => (
+              <AccordionItem
+                key={user.id}
+                value={user.login}
+                className="mb-2 border-0"
+              >
+                <UserCard user={user} />
+                <AccordionContent className="py-2 pl-8">
+                  {repositories.map((repository) => (
+                    <RepositoryCard
+                      key={repository.id}
+                      repository={repository}
+                    />
+                  ))}
+                </AccordionContent>
+              </AccordionItem>
+            ))
+          )}
+        </Accordion>
+      )}
     </Layout>
   );
 }
